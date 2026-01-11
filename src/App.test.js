@@ -1,28 +1,25 @@
 import { render, screen } from '@testing-library/react';
 import App from './App';
 
-test('renders navigation links', () => {
+test('renders Task Manager application', () => {
   render(<App />);
-  const homeLink = screen.getByText('Home');
-  const aboutLink = screen.getByText('About');
-  const contactLink = screen.getByText('Contact');
-  expect(homeLink).toBeInTheDocument();
-  expect(aboutLink).toBeInTheDocument();
-  expect(contactLink).toBeInTheDocument();
+  const taskManagerTitle = screen.getByText('Task Manager');
+  expect(taskManagerTitle).toBeInTheDocument();
 });
 
-test('renders home page content', () => {
+test('renders navigation buttons', () => {
   render(<App />);
-  const heading = screen.getByText(/Welcome to/);
-  const description = screen.getByText(
-    'This is a production-ready React application starter.'
-  );
-  expect(heading).toBeInTheDocument();
-  expect(description).toBeInTheDocument();
+  const allTasksButton = screen.getByText('All Tasks');
+  const completedButton = screen.getByText('Completed');
+  const newTaskButton = screen.getByText('+ New Task');
+
+  expect(allTasksButton).toBeInTheDocument();
+  expect(completedButton).toBeInTheDocument();
+  expect(newTaskButton).toBeInTheDocument();
 });
 
-test('renders main element', () => {
+test('renders dashboard content', () => {
   render(<App />);
-  const mainElement = screen.getByRole('main');
-  expect(mainElement).toBeInTheDocument();
+  const dashboardHeading = screen.getByRole('heading', { level: 1, name: 'Dashboard' });
+  expect(dashboardHeading).toBeInTheDocument();
 });
