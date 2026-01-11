@@ -2,7 +2,7 @@
 
 ## [critical] structural constraints
 - **file length:** max 200 lines. stop and propose refactor if exceeded.
-- **atomic commits:** one logical change per commit. avoid 4+ file 'mega-commits'.
+- **atomic commits:** one logical change per commit. strictly avoid mega-commits (>5 files). each commit must represent a single, complete feature or fix.
 - **solid:** strictly follow single responsibility and dependency inversion.
 - **environment awareness:** detect os; use powershell for windows and bash for unix.
 
