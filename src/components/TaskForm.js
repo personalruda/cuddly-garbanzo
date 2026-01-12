@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
-import { Button, Input, Card } from './ui';
+import { Button, Input, Card, Select, TextArea } from './ui';
 import { PRIORITY_LEVELS } from '../models';
 import useCategories from '../hooks/useCategories';
 
@@ -104,56 +104,21 @@ const TaskForm = ({ task, onSubmit, onCancel, loading = false }) => {
         </div>
 
         <div style={{ marginBottom: '16px' }}>
-          <label style={{
-            display: 'block',
-            marginBottom: '8px',
-            fontSize: '14px',
-            fontWeight: '500',
-            color: '#495057'
-          }}>
-            Description (Optional)
-          </label>
-          <textarea
+          <TextArea
+            label="Description (Optional)"
             value={formData.description}
             onChange={(e) => handleInputChange('description', e.target.value)}
             placeholder="Enter task description..."
             rows={3}
-            style={{
-              width: '100%',
-              padding: '10px 12px',
-              border: '1px solid #ced4da',
-              borderRadius: '4px',
-              fontSize: '16px',
-              lineHeight: '1.5',
-              color: '#495057',
-              backgroundColor: '#fff',
-              resize: 'vertical',
-              fontFamily: 'inherit',
-              boxSizing: 'border-box',
-            }}
           />
         </div>
 
         <div style={{ marginBottom: '16px' }}>
-          <label style={{
-            display: 'block',
-            marginBottom: '8px',
-            fontSize: '14px',
-            fontWeight: '500',
-            color: '#495057'
-          }}>
-            Priority
-          </label>
-          <select
+          <Select
+            label="Priority"
             value={formData.priority}
             onChange={(e) => handleInputChange('priority', e.target.value)}
             style={{
-              width: '100%',
-              padding: '10px 12px',
-              border: '1px solid #ced4da',
-              borderRadius: '4px',
-              fontSize: '16px',
-              backgroundColor: '#fff',
               color: getPriorityColor(formData.priority),
               fontWeight: '500',
             }}
@@ -167,7 +132,7 @@ const TaskForm = ({ task, onSubmit, onCancel, loading = false }) => {
             <option value={PRIORITY_LEVELS.HIGH} style={{ color: '#dc3545' }}>
               High Priority
             </option>
-          </select>
+          </Select>
         </div>
 
         <div style={{ marginBottom: '16px' }}>
@@ -183,26 +148,10 @@ const TaskForm = ({ task, onSubmit, onCancel, loading = false }) => {
 
         {categories.length > 0 && (
           <div style={{ marginBottom: '24px' }}>
-            <label style={{
-              display: 'block',
-              marginBottom: '8px',
-              fontSize: '14px',
-              fontWeight: '500',
-              color: '#495057'
-            }}>
-              Category (Optional)
-            </label>
-            <select
+            <Select
+              label="Category (Optional)"
               value={formData.categoryId}
               onChange={(e) => handleInputChange('categoryId', e.target.value)}
-              style={{
-                width: '100%',
-                padding: '10px 12px',
-                border: '1px solid #ced4da',
-                borderRadius: '4px',
-                fontSize: '16px',
-                backgroundColor: '#fff',
-              }}
             >
               <option value="">No Category</option>
               {categories.map(category => (
@@ -210,7 +159,7 @@ const TaskForm = ({ task, onSubmit, onCancel, loading = false }) => {
                   {category.name}
                 </option>
               ))}
-            </select>
+            </Select>
           </div>
         )}
 
