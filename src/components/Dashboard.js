@@ -1,6 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Card } from './ui';
+import StatsGrid from './StatsGrid';
+import TaskListItem from './TaskListItem';
 
 const Dashboard = ({ tasks, categories, stats }) => {
   const getTodayTasks = () => tasks.filter(task =>
@@ -23,49 +25,7 @@ const Dashboard = ({ tasks, categories, stats }) => {
     <div style={{ padding: '20px' }}>
       <h1 style={{ marginBottom: '32px', color: '#212529' }}>Dashboard</h1>
 
-      {/* Stats Cards */}
-      <div style={{
-        display: 'grid',
-        gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))',
-        gap: '16px',
-        marginBottom: '32px'
-      }}>
-        <Card>
-          <div style={{ textAlign: 'center' }}>
-            <h2 style={{ margin: '0 0 8px 0', color: '#28a745', fontSize: '32px' }}>
-              {stats.completed}
-            </h2>
-            <p style={{ margin: 0, color: '#6c757d' }}>Completed Tasks</p>
-          </div>
-        </Card>
-
-        <Card>
-          <div style={{ textAlign: 'center' }}>
-            <h2 style={{ margin: '0 0 8px 0', color: '#007bff', fontSize: '32px' }}>
-              {stats.pending}
-            </h2>
-            <p style={{ margin: 0, color: '#6c757d' }}>Pending Tasks</p>
-          </div>
-        </Card>
-
-        <Card>
-          <div style={{ textAlign: 'center' }}>
-            <h2 style={{ margin: '0 0 8px 0', color: '#dc3545', fontSize: '32px' }}>
-              {stats.overdue}
-            </h2>
-            <p style={{ margin: 0, color: '#6c757d' }}>Overdue Tasks</p>
-          </div>
-        </Card>
-
-        <Card>
-          <div style={{ textAlign: 'center' }}>
-            <h2 style={{ margin: '0 0 8px 0', color: '#ffc107', fontSize: '32px' }}>
-              {stats.completionRate}%
-            </h2>
-            <p style={{ margin: 0, color: '#6c757d' }}>Completion Rate</p>
-          </div>
-        </Card>
-      </div>
+      <StatsGrid stats={stats} />
 
       {/* Quick Overview */}
       <div style={{
@@ -78,26 +38,7 @@ const Dashboard = ({ tasks, categories, stats }) => {
           {getTodayTasks().length > 0 ? (
             <ul style={{ listStyle: 'none', padding: 0, margin: 0 }}>
               {getTodayTasks().slice(0, 5).map(task => (
-                <li key={task.id} style={{
-                  padding: '8px 0',
-                  borderBottom: '1px solid #dee2e6',
-                  display: 'flex',
-                  alignItems: 'center',
-                  gap: '8px'
-                }}>
-                  <input
-                    type="checkbox"
-                    checked={task.completed}
-                    readOnly
-                    style={{ margin: 0 }}
-                  />
-                  <span style={{
-                    textDecoration: task.completed ? 'line-through' : 'none',
-                    color: task.completed ? '#6c757d' : '#212529'
-                  }}>
-                    {task.title}
-                  </span>
-                </li>
+                <TaskListItem key={task.id} task={task} showCheckbox />
               ))}
             </ul>
           ) : (
@@ -110,29 +51,7 @@ const Dashboard = ({ tasks, categories, stats }) => {
           {getUpcomingTasks().length > 0 ? (
             <ul style={{ listStyle: 'none', padding: 0, margin: 0 }}>
               {getUpcomingTasks().slice(0, 5).map(task => (
-                <li key={task.id} style={{
-                  padding: '8px 0',
-                  borderBottom: '1px solid #dee2e6',
-                  display: 'flex',
-                  alignItems: 'center',
-                  gap: '8px'
-                }}>
-                  <span style={{
-                    color: task.priority === 'high' ? '#dc3545' :
-                           task.priority === 'medium' ? '#ffc107' : '#28a745',
-                    fontSize: '12px',
-                    fontWeight: 'bold'
-                  }}>
-                    {task.priority.toUpperCase()}
-                  </span>
-                  <span style={{ color: '#212529' }}>{task.title}</span>
-                  <span style={{ color: '#6c757d', fontSize: '12px', marginLeft: 'auto' }}>
-                    {new Date(task.dueDate).toLocaleDateString('en-US', {
-                      month: 'short',
-                      day: 'numeric'
-                    })}
-                  </span>
-                </li>
+                <TaskListItem key={task.id} task={task} showPriority showDate />
               ))}
             </ul>
           ) : (
@@ -158,12 +77,7 @@ const Dashboard = ({ tasks, categories, stats }) => {
                   }}>
                     {task.completed ? '✓' : '○'}
                   </span>
-                  <span style={{
-                    textDecoration: task.completed ? 'line-through' : 'none',
-                    color: task.completed ? '#6c757d' : '#212529'
-                  }}>
-                    {task.title}
-                  </span>
+                  <TaskListItem task={task} />
                 </li>
               ))}
             </ul>
